@@ -73,7 +73,7 @@ public class PubsBase : ComponentBase, IDisposable
         {
             SalesOrder = new SalesOrderJson
             {
-                OrderId = Guid.NewGuid().ToString(),
+                SalesOrderId = Guid.NewGuid().ToString(),
                 OrderNumber = string.Empty,
                 OrderDate = DateTime.UtcNow,
                 TotalAmount = 0
@@ -85,7 +85,7 @@ public class PubsBase : ComponentBase, IDisposable
 
         if (@event.ToolbarElement.Equals(ToolbarElement.Edit))
         {
-            if (string.IsNullOrEmpty(SalesOrder.OrderId) || SalesOrder.OrderId.Equals(Guid.Empty.ToString()))
+            if (string.IsNullOrEmpty(SalesOrder.SalesOrderId) || SalesOrder.SalesOrderId.Equals(Guid.Empty.ToString()))
                 return;
 
             HideGrid = true;

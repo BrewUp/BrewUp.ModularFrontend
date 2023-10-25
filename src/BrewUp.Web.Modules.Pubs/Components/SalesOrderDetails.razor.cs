@@ -46,7 +46,7 @@ public class SalesOrderDetailsBase : ComponentBase, IAsyncDisposable
         {
             SalesOrder = new SalesOrderJson
             {
-                OrderId = Guid.NewGuid().ToString(),
+                SalesOrderId = Guid.NewGuid().ToString(),
                 OrderNumber = $"{DateTime.UtcNow.Year:0000}{DateTime.UtcNow.Month:00}{DateTime.UtcNow.Day:00}-01",
                 OrderDate = DateTime.UtcNow,
                 TotalAmount = 0

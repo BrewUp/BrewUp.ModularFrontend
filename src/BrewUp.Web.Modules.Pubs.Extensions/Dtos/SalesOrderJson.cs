@@ -2,7 +2,7 @@
 
 public class SalesOrderJson
 {
-    public string OrderId { get; set; } = string.Empty;
+    public string SalesOrderId { get; set; } = string.Empty;
     public string OrderNumber { get; set; } = string.Empty;
     public DateTime? OrderDate { get; set; } = DateTime.Now;
 
