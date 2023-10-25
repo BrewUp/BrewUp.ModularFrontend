@@ -1,0 +1,25 @@
+﻿@inherits PubsBase
+@page "/pubs"
+
+@using MudBlazor
+
+<div hidden="@HideGrid">
+	<GridToolbar ModuleName="ModuleNames.Pubs" />
+</div>
+<div hidden="@HideDetails">
+	<DetailsToolbar ModuleName="ModuleNames.Pubs" />
+</div>
+<hr/>
+
+<MudAlert id="alert-message">@Message</MudAlert>
+
+<div hidden="@HideGrid">
+	<PubsGrid Beers="@Beers"></PubsGrid>
+</div>
+
+<div hidden="@HideDetails">
+	<SalesOrderDetails SalesOrder="@SalesOrder"
+	                   Beers="@Beers"
+	                   Customers="@Customers"
+	                   Warehouses="@Warehouses"></SalesOrderDetails>		
+</div>
