@@ -16,26 +16,26 @@ public class IndexBase : ComponentBase, IAsyncDisposable
     {
         Message = "Welcome to Beer Driven Development";
 
-        HubConnection = new HubConnectionBuilder()
-            .WithUrl("http://localhost:5043/device")
-            .WithAutomaticReconnect()
-            .Build();
+        // HubConnection = new HubConnectionBuilder()
+        //     .WithUrl("http://localhost:5043/device")
+        //     .WithAutomaticReconnect()
+        //     .Build();
 
-        HubConnection.On<string, string>("deviceUpdateForAll", (clientId, message) =>
-        {
-            Message = message;
+        // HubConnection.On<string, string>("deviceUpdateForAll", (clientId, message) =>
+        // {
+        //     Message = message;
+        //
+        //     Messages = Messages.Prepend($"{clientId}: {message}");
+        //     StateHasChanged();
+        // });
 
-            Messages = Messages.Prepend($"{clientId}: {message}");
-            StateHasChanged();
-        });
-
-        await HubConnection.StartAsync();
+        // await HubConnection.StartAsync();
     }
 
     #region Dispose
     public async ValueTask DisposeAsync()
     {
-        await HubConnection.DisposeAsync();
+        // await HubConnection.DisposeAsync();
     }
     #endregion
 }

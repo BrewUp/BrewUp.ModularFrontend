@@ -9,22 +9,22 @@ public class PubsGridBase : ComponentBase, IDisposable
 {
     [Inject] private BlazorComponentBus.ComponentBus Bus { get; set; } = default!;
 
-    [Parameter] public IEnumerable<BeerJson> Beers { get; set; } = Enumerable.Empty<BeerJson>();
+    [Parameter] public IEnumerable<PubJson> Pubs { get; set; } = Enumerable.Empty<PubJson>();
 
     private int _selectedRowNumber = -1;
-    protected MudTable<BeerJson> MudTable = new();
+    protected MudTable<PubJson> MudTable = new();
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
     }
 
-    protected Task RowClickEvent(TableRowClickEventArgs<BeerJson> tableRowClickEventArgs)
+    protected Task RowClickEvent(TableRowClickEventArgs<PubJson> tableRowClickEventArgs)
     {
-        return Bus.Publish(new BrewUpEvent($"Beer selected {tableRowClickEventArgs.Item.BeerName}", string.Empty));
+        return Bus.Publish(new BrewUpEvent($"Pub selected {tableRowClickEventArgs.Item.PubName}", string.Empty));
     }
 
-    protected string SelectedRowClassFunc(BeerJson element, int rowNumber)
+    protected string SelectedRowClassFunc(PubJson element, int rowNumber)
     {
         if (_selectedRowNumber == rowNumber)
         {

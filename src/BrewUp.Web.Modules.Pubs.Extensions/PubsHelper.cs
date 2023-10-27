@@ -9,6 +9,7 @@ public static class PubsHelper
     public static IServiceCollection AddPubsModule(this IServiceCollection services)
     {
         services.AddScoped<IBeerService, BeerService>();
+        services.AddScoped<IPubService, PubService>();
 
         return services;
     }

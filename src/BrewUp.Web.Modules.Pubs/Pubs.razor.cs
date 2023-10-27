@@ -14,11 +14,11 @@ public class PubsBase : ComponentBase, IDisposable
 {
     [Inject] private NavigationManager NavigationManager { get; set; } = default!;
     [Inject] private ComponentBus Bus { get; set; } = default!;
-    [Inject] private IBeerService BeerService { get; set; } = default!;
+    [Inject] private IPubService PubService { get; set; } = default!;
     [Inject] private ICustomerService CustomerService { get; set; } = default!;
     [Inject] private IWarehouseService WarehouseService { get; set; } = default!;
 
-    protected IEnumerable<BeerJson> Beers { get; set; } = Enumerable.Empty<BeerJson>();
+    protected IEnumerable<PubJson> Pubs { get; set; } = Enumerable.Empty<PubJson>();
     [Parameter] public IEnumerable<CustomerJson> Customers { get; set; } = Enumerable.Empty<CustomerJson>();
     [Parameter] public IEnumerable<WarehouseJson> Warehouses { get; set; } = Enumerable.Empty<WarehouseJson>();
 
@@ -36,17 +36,17 @@ public class PubsBase : ComponentBase, IDisposable
         Bus.Subscribe<ToolbarElementClicked>(ToolbarEventHandler);
         Bus.Subscribe<SalesOrderDetailsSubmitted>(SaveSalesOrderCommandHandler);
 
-        await LoadBeersAsync();
+        await LoadPubsAsync();
         await LoadCustomersAsync();
         await LoadWarehousesAsync();
 
         await base.OnInitializedAsync();
     }
 
-    private async Task LoadBeersAsync()
+    private async Task LoadPubsAsync()
     {
         IsLoading = true;
-        Beers = await BeerService.GetBeersAsync();
+        Pubs = await PubService.GetPubsAsync();
         IsLoading = false;
 
         StateHasChanged();
