@@ -13,7 +13,6 @@ namespace BrewUp.Web.Shared.Concretes
     {
         private readonly HttpClient _httpClient;
         private readonly NavigationManager _navigationManager;
-        //private readonly ILocalStorageService _localStorageService;
         private readonly ISessionStorageService _sessionStorageService;
         private readonly ITokenService _tokenService;
 

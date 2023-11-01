@@ -4,13 +4,12 @@
 
 <MudTable Items="@Pubs" Hover="true" 
           @ref="MudTable" 
-          Striped="true" 
           RowClassFunc="@SelectedRowClassFunc" 
-          OnRowClick="RowClickEvent" T="PubJson"
+          OnRowClick="RowClickEvent"
+          T="PubJson"
           id="pubs-grid">
 	<HeaderContent>
-		<MudTh>Beer Type</MudTh>
-		<MudTh>Quantity</MudTh>
+		<MudTh>Name</MudTh>
 	</HeaderContent>
 	<RowTemplate>
 		<MudTd DataLabel="Name">@context.PubName</MudTd>

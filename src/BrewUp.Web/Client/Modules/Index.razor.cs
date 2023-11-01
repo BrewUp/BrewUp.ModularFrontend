@@ -14,7 +14,7 @@ public class IndexBase : ComponentBase, IAsyncDisposable
 
     protected override async Task OnInitializedAsync()
     {
-        Message = "Welcome to Beer Driven Development";
+        Message = "Welcome to BrewUp Modular Frontend";
 
         // HubConnection = new HubConnectionBuilder()
         //     .WithUrl("http://localhost:5043/device")

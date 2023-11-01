@@ -2,24 +2,27 @@
 @page "/pubs"
 
 @using MudBlazor
+@using BrewUp.Web.Modules.Pubs.Components
+@using BrewUp.Web.Modules.Shared
+@using BrewUp.Web.Shared.Enums
 
 <div hidden="@HideGrid">
-	<GridToolbar ModuleName="ModuleNames.Pubs" />
+	<GridToolbar ModuleName="ModuleNames.Pubs"/>
 </div>
 <div hidden="@HideDetails">
-	<DetailsToolbar ModuleName="ModuleNames.Pubs" />
+	<DetailsToolbar ModuleName="ModuleNames.Pubs"/>
 </div>
 <hr/>
 
 <MudAlert id="alert-message">@Message</MudAlert>
 
 <div hidden="@HideGrid">
-	<PubsGrid Beers="@Pubs"></PubsGrid>
+	<PubsGrid Pubs="@Pubs"></PubsGrid>
 </div>
 
 <div hidden="@HideDetails">
 	<SalesOrderDetails SalesOrder="@SalesOrder"
 	                   Pubs="@Pubs"
-	                   Customers="@Customers"
-	                   Warehouses="@Warehouses"></SalesOrderDetails>		
+					   Beers="@Beers"
+	                   SelectedPub="CurrentPub"></SalesOrderDetails>		
 </div>

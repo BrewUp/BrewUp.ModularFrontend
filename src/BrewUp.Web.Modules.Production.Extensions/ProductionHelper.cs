@@ -6,10 +6,10 @@ namespace BrewUp.Web.Modules.Production.Extensions;
 
 public static class ProductionHelper
 {
-    public static IServiceCollection AddProductionModule(this IServiceCollection services)
-    {
-        services.AddScoped<IProductionService, ProductionService>();
+	public static IServiceCollection AddProductionModule(this IServiceCollection services)
+	{
+		services.AddScoped<IProductionService, ProductionService>();
 
-        return services;
-    }
+		return services;
+	}
 }

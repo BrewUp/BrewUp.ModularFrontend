@@ -9,14 +9,19 @@ namespace BrewUp.Web.Modules.Pubs.Extensions.Concretes;
 
 public sealed class PubService : BaseHttpService, IPubService
 {
-    public PubService(HttpClient httpClient, IHttpService httpService, AppConfiguration appConfiguration,
-        ILoggerFactory loggerFactory) : base(httpClient, httpService, appConfiguration, loggerFactory)
-    {
-    }
-    
-    public async Task<IEnumerable<PubJson>> GetPubsAsync()
-    {
-        return await HttpService.Get<IEnumerable<PubJson>>(
-            $"{AppConfiguration.PubsApiUri}v1/masterdata/pubs");
-    }
+	public PubService(HttpClient httpClient, IHttpService httpService, AppConfiguration appConfiguration,
+		ILoggerFactory loggerFactory) : base(httpClient, httpService, appConfiguration, loggerFactory)
+	{
+	}
+
+	public async Task<IEnumerable<PubJson>> GetPubsAsync()
+	{
+		return await HttpService.Get<IEnumerable<PubJson>>(
+			$"{AppConfiguration.PubsApiUri}v1/registries/pubs");
+	}
+
+	public async Task SendSalesOrderAsync(SalesOrderJson salesOrder)
+	{
+		await HttpService.Post($"{AppConfiguration.PubsApiUri}v1/sales", salesOrder);
+	}
 }

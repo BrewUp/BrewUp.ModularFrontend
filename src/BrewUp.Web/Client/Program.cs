@@ -3,14 +3,11 @@ using Blazored.SessionStorage;
 using BrewUp.Web.Client;
 using BrewUp.Web.Modules.Production.Extensions;
 using BrewUp.Web.Modules.Pubs.Extensions;
-using BrewUp.Web.Modules.Shared.Extensions;
 using BrewUp.Web.Shared.Configuration;
 using BrewUp.Web.Shared.Helpers;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.AspNetCore.Components.WebAssembly.Services;
 using MudBlazor.Services;
-using Serilog;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -20,28 +17,18 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 #region Configuration
 builder.Services.AddSingleton(_ => builder.Configuration.GetSection("BrewUp:AppConfiguration")
-    .Get<AppConfiguration>());
+	.Get<AppConfiguration>());
 builder.Services.AddApplicationService();
 #endregion
-
-#region Infrastructure
-builder.Services.AddScoped<LazyAssemblyLoader>();
-builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
-
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.File("Logs\\BrewUp.log")
-    .CreateLogger();
 
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredSessionStorage();
 
 builder.Services.AddScoped<ComponentBus>();
-#endregion
 
 #region Modules
-builder.Services.AddSharedModule();
-builder.Services.AddProductionModule();
 builder.Services.AddPubsModule();
+builder.Services.AddProductionModule();
 #endregion
 
 await builder.Build().RunAsync();

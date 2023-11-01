@@ -1,5 +1,5 @@
-﻿using BrewUp.Web.Modules.Production.Events;
-using BrewUp.Web.Modules.Pubs.Extensions.Dtos;
+﻿using BrewUp.Web.Modules.Pubs.Extensions.Dtos;
+using BrewUp.Web.Shared.Messages;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -21,7 +21,7 @@ public class PubsGridBase : ComponentBase, IDisposable
 
     protected Task RowClickEvent(TableRowClickEventArgs<PubJson> tableRowClickEventArgs)
     {
-        return Bus.Publish(new BrewUpEvent($"Pub selected {tableRowClickEventArgs.Item.PubName}", string.Empty));
+        return Bus.Publish(new BrewUpEvent($"Pub selected {tableRowClickEventArgs.Item.PubId}", tableRowClickEventArgs.Item.PubId.ToString()));
     }
 
     protected string SelectedRowClassFunc(PubJson element, int rowNumber)

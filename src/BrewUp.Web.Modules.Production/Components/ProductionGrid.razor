@@ -2,19 +2,20 @@
 @using MudBlazor
 @using BrewUp.Web.Modules.Production.Extensions.Dtos
 
-<MudTable Items="@ProductionOrders" Hover="true" @ref="MudTable" Striped="true" RowClassFunc="@SelectedRowClassFunc" OnRowClick="RowClickEvent" T="ProductionOrderJson">
+<MudTable Items="@ProductionOrders" Hover="true" 
+          @ref="MudTable"
+          Striped="true"
+          RowClassFunc="@SelectedRowClassFunc"
+          OnRowClick="RowClickEvent"
+          T="ProductionOrderJson">
 	<HeaderContent>
 		<MudTh>Order Number</MudTh>
-		<MudTh>Beer Type</MudTh>
-		<MudTh>Quantity To Produce</MudTh>
-		<MudTh>Quantity Produced</MudTh>
-		<MudTh>Status</MudTh>
+		<MudTh>Order Date</MudTh>
+		<MudTh>Order State</MudTh>
 	</HeaderContent>
 	<RowTemplate>
-		<MudTd DataLabel="#">@context.BatchNumber</MudTd>
-		<MudTd DataLabel="Type">@context.BeerType</MudTd>
-		<MudTd DataLabel="To Produce">@context.QuantityToProduce</MudTd>
-		<MudTd DataLabel="Produced">@context.QuantityProduced</MudTd>
-		<MudTd DataLabel="Status">@context.Status</MudTd>
+		<MudTd DataLabel="#">@context.ProductionOrderNumber</MudTd>
+		<MudTd DataLabel="Date">@context.OrderData</MudTd>
+		<MudTd DataLabel="State">@context.Status</MudTd>
 	</RowTemplate>
 </MudTable>

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -6,22 +6,20 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
-	<ItemGroup>
-		<SupportedPlatform Include="browser" />
-	</ItemGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.8" />
-		<PackageReference Include="MudBlazor" Version="6.2.5" />
-		<PackageReference Include="BlazorComponentBus" Version="2.2.0" />
-	</ItemGroup>
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\BrewUp.Web.Modules.Production\BrewUp.Web.Modules.Production.csproj" />
-	  <ProjectReference Include="..\BrewUp.Web.Modules.Pubs.Extensions\BrewUp.Web.Modules.Pubs.Extensions.csproj" />
-	  <ProjectReference Include="..\BrewUp.Web.Modules.Shared.Extensions\BrewUp.Web.Modules.Shared.Extensions.csproj" />
-	  <ProjectReference Include="..\BrewUp.Web.Modules.Shared\BrewUp.Web.Modules.Shared.csproj" />
-	  <ProjectReference Include="..\BrewUp.Web.Shared\BrewUp.Web.Shared.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.13" />
+    <PackageReference Include="MudBlazor" Version="6.11.0" />
+    <PackageReference Include="BlazorComponentBus" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BrewUp.Web.Modules.Pubs.Extensions\BrewUp.Web.Modules.Pubs.Extensions.csproj" />
+    <ProjectReference Include="..\BrewUp.Web.Modules.Shared\BrewUp.Web.Modules.Shared.csproj" />
+  </ItemGroup>
 
 </Project>

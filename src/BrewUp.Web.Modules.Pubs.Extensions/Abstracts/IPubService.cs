@@ -4,5 +4,6 @@ namespace BrewUp.Web.Modules.Pubs.Extensions.Abstracts;
 
 public interface IPubService
 {
-    Task<IEnumerable<PubJson>> GetPubsAsync();
+	Task<IEnumerable<PubJson>> GetPubsAsync();
+	Task SendSalesOrderAsync(SalesOrderJson salesOrder);
 }

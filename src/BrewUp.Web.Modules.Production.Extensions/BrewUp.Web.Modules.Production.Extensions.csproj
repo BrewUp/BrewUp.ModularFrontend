@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Messages\" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BrewUp.Web.Shared\BrewUp.Web.Shared.csproj" />
   </ItemGroup>
 

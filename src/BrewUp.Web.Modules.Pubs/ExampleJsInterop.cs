@@ -1,6 +1,6 @@
 using Microsoft.JSInterop;
 
-namespace BrewUp.Web.Modules.Pubs
+namespace BrewUp.Web.Modules.Pub
 {
     // This class provides an example of how JavaScript functionality can be wrapped
     // in a .NET class for easy consumption. The associated JavaScript module is
@@ -16,7 +16,7 @@ namespace BrewUp.Web.Modules.Pubs
         public ExampleJsInterop(IJSRuntime jsRuntime)
         {
             moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/BrewUp.Web.Modules.Pubs/exampleJsInterop.js").AsTask());
+                "import", "./_content/BrewUp.Web.Modules.Pub/exampleJsInterop.js").AsTask());
         }
 
         public async ValueTask<string> Prompt(string message)

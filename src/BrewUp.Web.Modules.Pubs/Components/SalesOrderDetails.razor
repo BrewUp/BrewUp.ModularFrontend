@@ -2,7 +2,7 @@
 
 @using MudBlazor
 @using Microsoft.AspNetCore.Components
-@using BrewUp.Web.Modules.Shared.Extensions.Dtos
+@using BrewUp.Web.Modules.Pubs.Extensions.Dtos
 
 <EditForm Model="@SalesOrder" OnValidSubmit="OnValidSubmit">
 	<DataAnnotationsValidator/>
@@ -18,7 +18,7 @@
 			<MudCard>
 				<MudCardContent>
 					<MudTextField T="string" Label="Number" id="order-number"
-					              @bind-Value="SalesOrder.OrderNumber" For="@(() => SalesOrder.OrderNumber)" 
+					              @bind-Value="SalesOrder.SalesOrderNumber" For="@(() => SalesOrder.SalesOrderNumber)" 
 					              RequiredError="Order Number is Mandatory!" Variant="Variant.Text" />
 				</MudCardContent>
 			</MudCard>
@@ -40,22 +40,24 @@
 		</MudItem>
 		
 		<MudItem xs="12" sm="6">
-			<MudSelect T="CustomerJson" Label="Customer"
-							   @bind-Value="CurrentCustomer" Required="true" RequiredError="Customer is Mandatory!">
-				@foreach (var customer in Customers)
+			<MudSelect T="PubJson" Label="Pub"
+			           @bind-Value="CurrentPub" Required="true" RequiredError="Pub is Mandatory!">
+				@foreach (var pub in Pubs)
 				{
-					<MudSelectItem Value="@(customer)">@customer.CustomerName</MudSelectItem>
+					<MudSelectItem Value="@(pub)">@pub.PubName</MudSelectItem>
 				}
 			</MudSelect>
 		</MudItem>
-		<MudItem xs="12" sm="6">
-			<MudSelect T="WarehouseJson" Label="Warehouse"
-			           @bind-Value="CurrentWarehouse" Required="true" RequiredError="Warehouse is Mandatory!">
-				@foreach (var warehouse in Warehouses)
-				{
-					<MudSelectItem Value="@(warehouse)">@warehouse.WarehouseName</MudSelectItem>
-				}
-			</MudSelect>
-		</MudItem>
+	</MudGrid>
+	<MudGrid Spacing="2" Justify="Justify.FlexStart">
+		@foreach (var beer in SalesOrder.Rows)
+		{
+			<MudItem xs="12" md="12">
+				<MudCard Class="pa-12">
+					<MudText Typo="Typo.body2">@beer.BeerName</MudText>
+					<MudTextField @bind-Value="@beer.Quantity.Value" Label="Quantity" Adornment="Adornment.End" AdornmentText="Lt" Variant="Variant.Filled"></MudTextField>
+				</MudCard>
+			</MudItem>
+		}
 	</MudGrid>
 </EditForm>

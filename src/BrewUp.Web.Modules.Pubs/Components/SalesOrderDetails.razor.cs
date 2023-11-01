@@ -1,7 +1,6 @@
 ﻿using BlazorComponentBus;
 using BrewUp.Web.Modules.Pubs.Extensions.Dtos;
 using BrewUp.Web.Modules.Pubs.Extensions.Messages;
-using BrewUp.Web.Modules.Shared.Extensions.Dtos;
 using BrewUp.Web.Shared.Enums;
 using BrewUp.Web.Shared.Messages;
 using Microsoft.AspNetCore.Components;
@@ -10,70 +9,94 @@ namespace BrewUp.Web.Modules.Pubs.Components;
 
 public class SalesOrderDetailsBase : ComponentBase, IAsyncDisposable
 {
-    [Parameter] public SalesOrderJson SalesOrder { get; set; } = new();
-    [Parameter] public IEnumerable<BeerJson> Beers { get; set; } = Enumerable.Empty<BeerJson>();
-    [Parameter] public IEnumerable<CustomerJson> Customers { get; set; } = Enumerable.Empty<CustomerJson>();
-    [Parameter] public IEnumerable<WarehouseJson> Warehouses { get; set; } = Enumerable.Empty<WarehouseJson>();
+	[Parameter] public SalesOrderJson SalesOrder { get; set; } = new();
+	[Parameter] public IEnumerable<BeerJson> Beers { get; set; } = Enumerable.Empty<BeerJson>();
+	[Parameter] public IEnumerable<PubJson> Pubs { get; set; } = Enumerable.Empty<PubJson>();
+	[Parameter] public PubJson SelectedPub { get; set; } = new();
 
-    protected CustomerJson CurrentCustomer { get; set; } = new();
-    protected WarehouseJson CurrentWarehouse { get; set; } = new();
+	protected PubJson CurrentPub { get; set; } = new();
 
-    [Inject] private ComponentBus Bus { get; set; } = default!;
+	[Inject] private ComponentBus Bus { get; set; } = default!;
 
-    protected override Task OnInitializedAsync()
-    {
-        Bus.Subscribe<ToolbarElementClicked>(ToolbarEventHandler);
+	protected override Task OnInitializedAsync()
+	{
+		Bus.Subscribe<ToolbarElementClicked>(ToolbarEventHandler);
 
-        CurrentCustomer = Customers.Any()
-            ? Customers.First()
-            : new CustomerJson();
+		return base.OnInitializedAsync();
+	}
 
-        CurrentWarehouse = Warehouses.Any()
-            ? Warehouses.First()
-            : new WarehouseJson();
+	protected override Task OnParametersSetAsync()
+	{
+		CurrentPub = SelectedPub;
 
-        return base.OnInitializedAsync();
-    }
+		SalesOrder.SalesOrderNumber =
+			$"{DateTime.UtcNow.Year:0000}{DateTime.UtcNow.Month:00}{DateTime.UtcNow.Day:00}-{DateTime.UtcNow.Hour:00}{DateTime.UtcNow.Minute:00}";
+		SalesOrder.PubId = CurrentPub.PubId.ToString();
+		SalesOrder.PubName = CurrentPub.PubName;
 
-    private void ToolbarEventHandler(MessageArgs args)
-    {
-        var @event = args.GetMessage<ToolbarElementClicked>();
+		var orderRows = Beers.Select(beer => new SalesOrderRowJson
+		{
+			BeerId = beer.BeerId,
+			BeerName = beer.BeerName,
+			Quantity = new Quantity
+			{
+				Value = 100,
+				UnitOfMeasure = "Lt"
+			},
+			Price = new Price
+			{
+				Value = 5,
+				Currency = "EUR"
+			}
+		})
+			.ToList();
+		SalesOrder.Rows = orderRows;
 
-        if (!@event.ModuleName.Equals(ModuleNames.Pubs))
-            return;
+		return base.OnParametersSetAsync();
+	}
 
-        if (@event.ToolbarElement.Equals(ToolbarElement.ClearAll))
-        {
-            SalesOrder = new SalesOrderJson
-            {
-                SalesOrderId = Guid.NewGuid().ToString(),
-                OrderNumber = $"{DateTime.UtcNow.Year:0000}{DateTime.UtcNow.Month:00}{DateTime.UtcNow.Day:00}-01",
-                OrderDate = DateTime.UtcNow,
-                TotalAmount = 0
-            };
+	private void ToolbarEventHandler(MessageArgs args)
+	{
+		var @event = args.GetMessage<ToolbarElementClicked>();
 
-            StateHasChanged();
-            return;
-        }
+		if (!@event.ModuleName.Equals(ModuleNames.Pubs))
+			return;
 
-        if (!@event.ToolbarElement.Equals(ToolbarElement.Save))
-            return;
+		if (@event.ToolbarElement.Equals(ToolbarElement.ClearAll))
+		{
+			SalesOrder = new SalesOrderJson
+			{
+				SalesOrderId = Guid.NewGuid().ToString(),
+				SalesOrderNumber = $"{DateTime.UtcNow.Year:0000}{DateTime.UtcNow.Month:00}{DateTime.UtcNow.Day:00}-{DateTime.UtcNow.Hour:00}{DateTime.UtcNow.Minute:00}",
+				OrderDate = DateTime.UtcNow,
+				TotalAmount = 0
+			};
 
-        Bus.Publish(new SalesOrderDetailsSubmitted(SalesOrder));
-    }
+			StateHasChanged();
+			return;
+		}
 
-    #region Dispose
-    public async ValueTask DisposeAsync()
-    {
-        await DisposeAsyncInternal();
-        GC.SuppressFinalize(this);
-    }
+		if (!@event.ToolbarElement.Equals(ToolbarElement.Save))
+			return;
 
-    protected virtual async ValueTask DisposeAsyncInternal()
-    {
-        // Async cleanup mock
-        Bus.UnSubscribe<ToolbarElementClicked>(ToolbarEventHandler);
-        await Task.Yield();
-    }
-    #endregion
+		SalesOrder.PubId = CurrentPub.PubId.ToString();
+		SalesOrder.PubName = CurrentPub.PubName;
+
+		Bus.Publish(new SalesOrderDetailsSubmitted(SalesOrder));
+	}
+
+	#region Dispose
+	public async ValueTask DisposeAsync()
+	{
+		await DisposeAsyncInternal();
+		GC.SuppressFinalize(this);
+	}
+
+	protected virtual async ValueTask DisposeAsyncInternal()
+	{
+		// Async cleanup mock
+		Bus.UnSubscribe<ToolbarElementClicked>(ToolbarEventHandler);
+		await Task.Yield();
+	}
+	#endregion
 }
